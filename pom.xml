@@ -81,7 +81,7 @@
           <execution><goals><goal>java</goal></goals></execution>
         </executions>
         <configuration>
-          <mainClass>org.example.pdfconverter.PdfConverter</mainClass>
+          <mainClass>org.example.PDFManip</mainClass>
         </configuration>
       </plugin>
       <plugin>
