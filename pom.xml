@@ -14,26 +14,38 @@
   </properties>
  
   <dependencies>
+      <!-- Jetty -->
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
       <version>${jettyVersion}</version>
     </dependency>
+    <!-- HtmlEasy -->
     <dependency>
       <groupId>com.googlecode.htmleasy</groupId>
       <artifactId>htmleasy</artifactId>
       <version>0.7</version>
    </dependency>
+    <!-- resteasy ?! -->
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxrs</artifactId>
       <version>2.2.1.GA</version>
     </dependency>
+
+    <!-- Soy -->
     <dependency>
       <groupId>com.papercut.silken</groupId>
       <artifactId>silken</artifactId>
       <version>2013-03-05</version>
     </dependency>
+
+     <!-- pdfBox -->
+      <dependency>
+          <groupId>org.apache.pdfbox</groupId>
+          <artifactId>pdfbox</artifactId>
+          <version>1.8.2</version>
+      </dependency>
   </dependencies>
 
   <repositories>
@@ -44,6 +56,12 @@
     <repository>
       <id>codedance on Github</id>
       <url>https://github.com/codedance/maven-repository/raw/master</url>
+    </repository>
+    <repository>
+        <id>
+            main repo
+        </id>
+        <url>http://repo.maven.apache.org/maven2/</url>
     </repository>
   </repositories>
  
@@ -63,7 +81,7 @@
           <execution><goals><goal>java</goal></goals></execution>
         </executions>
         <configuration>
-          <mainClass>org.example.HelloWorld</mainClass>
+          <mainClass>org.example.pdfconverter.PdfConverter</mainClass>
         </configuration>
       </plugin>
       <plugin>
