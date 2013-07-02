@@ -11,6 +11,7 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,11 +19,16 @@ import java.util.Scanner;
  */
 public class PdfConverter {
 
-    private static InputStream getImageInputStream(String fn) throws FileNotFoundException {
-        return new FileInputStream(new File(fn));
-    }
+    public static PDDocument imagesToPdf(List<String> files) throws IOException {
+        PDDocument document = new PDDocument();
 
-    public static void addImage(PDDocument document,String filename) throws IOException {
+        for (String img: files) {
+           addImage(document, img);
+        }
+
+        return document;
+    }
+    private static void addImage(PDDocument document,String filename) throws IOException {
         // Load Image from file
         BufferedImage awtImage = ImageIO.read(new File(filename));
         PDXObjectImage ximage = new PDPixelMap(document, awtImage);
@@ -46,6 +52,10 @@ public class PdfConverter {
        return doc;
     }
 
+    /*
+       Was used for testing.
+
+
     private static void testImage() throws IOException, COSVisitorException {
         PDDocument document = new PDDocument();
 
@@ -64,8 +74,10 @@ public class PdfConverter {
         doc.close();
 
     }
+
     public static void main(String[] args) throws IOException, COSVisitorException {
         testText();
         //testImage();
     }
+    */
 }
