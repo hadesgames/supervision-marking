@@ -106,7 +106,7 @@ public class Home{
             return response.build();
         }
 
-        File file = new File("/home/ap760/cur/supervision-marking/temp/" + fileName + ".pdf");
+        File file = new File("temp/" + fileName + ".pdf");
 
         if (!file.exists())
             throw new RedirectException("/");
@@ -122,7 +122,7 @@ public class Home{
     public Response getPages(@PathParam("id") int page) throws IOException {
 
         PDDocument rez = new PDDocument();
-        File root = new File("/home/ap760/cur/supervision-marking/temp/Store");
+        File root = new File("temp/Store");
         String[] extensions = {"pdf"};
 
         Collection files = FileUtils.listFiles(root, extensions, true);
@@ -145,5 +145,12 @@ public class Home{
         }
 
         throw new RedirectException("download/sol/Merged");
+    }
+
+    @Path("download-test")
+    @GET
+    @ViewWith("/soy/home.download")
+    public Map<String, ?> bla(){
+        return ImmutableMap.of();
     }
 }

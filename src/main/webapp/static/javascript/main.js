@@ -9,3 +9,12 @@ $(document).ready(function() {
       form.append(filenameDiv);
    });
 });
+
+
+$(document).ready(function() {
+    $('.getPage input[type="submit"]').click(function() {
+       val = $('.getPage input[type="text"]').val();
+
+       window.location.href="/getPage/" + val;
+    })
+})
