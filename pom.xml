@@ -98,7 +98,7 @@
           <execution><goals><goal>java</goal></goals></execution>
         </executions>
         <configuration>
-          <mainClass>org.example.PDFManip</mainClass>
+          <mainClass>org.example.pdfTools.PdfManip</mainClass>
         </configuration>
       </plugin>
       <plugin>

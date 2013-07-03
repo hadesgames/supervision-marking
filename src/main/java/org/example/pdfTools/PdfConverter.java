@@ -1,4 +1,4 @@
-package org.example.pdfconverter;
+package org.example.pdfTools;
 
 import org.apache.pdfbox.TextToPDF;
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by hadesgames on 7/1/13.
