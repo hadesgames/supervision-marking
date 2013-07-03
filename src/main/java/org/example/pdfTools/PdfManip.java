@@ -1,4 +1,4 @@
-package org.example;
+package org.example.pdfTools;
 
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -17,11 +17,11 @@ import java.util.List;
  * Time: 10:53
  * To change this template use File | Settings | File Templates.
  */
-public class PDFManip {
+public class PdfManip {
 
     public static void main(String[] args) throws IOException {
 
-        String pathName = "/home/ap760/cur/supervision-marking/bla.pdf";  // args[0]
+        String pathName = "/home/ap760/cur/supervision-marking/temp/bla.pdf";  // args[0]
 
         PDDocument document = PDDocument.load(pathName);
 
@@ -32,12 +32,33 @@ public class PDFManip {
         saveList(listPDF);
 
         mergeList(listPDF);
+
+        getPage(document, 2);
+    }
+
+    public static PDPage getPage(PDDocument document, int pageId)
+    {
+        try
+        {
+            List allPages = document.getDocumentCatalog().getAllPages();
+
+            if (pageId >= allPages.size())
+                return new PDPage();
+
+            return (PDPage) allPages.get(pageId);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getStackTrace());
+
+            return new PDPage();
+        }
     }
 
     public static void copy(PDDocument document)
     {
         try {
-            document.save("Saved Copy.pdf");
+            document.save("temp/Saved Copy.pdf");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +78,7 @@ public class PDFManip {
                 newDoc = new PDDocument();
 
                 newDoc.addPage((PDPage) allPages.get(curPageCnt));
-                newDoc.save("Saved Page #" + curPageCnt + ".pdf");
+                newDoc.save("temp/Saved Page #" + curPageCnt + ".pdf");
                 newDoc.close();
             }
         }
@@ -78,7 +99,7 @@ public class PDFManip {
             for (Object page : allPages)
                 newDoc.addPage((PDPage) page);
 
-            newDoc.save("Saved Merge.pdf");
+            newDoc.save("temp/Saved Merge.pdf");
             newDoc.close();
         }
         catch ( Exception e ) {
