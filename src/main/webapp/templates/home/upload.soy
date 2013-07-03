@@ -3,8 +3,18 @@
 * Home page
 */
 {template .upload}
-    <form method="post" action="/upload" enctype="multipart/form-data">
-        <input type="file" name="file"/>
-        <input type="submit" name="submit" value="Trimite-ma"/>
-    </form>
+    <html>
+        <head>
+            <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"> </script>
+            <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+            <script type="text/javascript" src="/static/javascript/main.js"> </script>
+        </head>
+        <body>
+
+            <form class="file-upload" method="post" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="file"/>
+                <input type="submit" name="submit" value="Trimite-ma"/>
+            </form>
+        </body>
+    </html>
 {/template}

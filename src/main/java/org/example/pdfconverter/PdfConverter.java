@@ -46,7 +46,7 @@ public class PdfConverter {
         document.addPage(page);
     }
 
-    public static PDDocument addText(String text) throws IOException, COSVisitorException {
+    public static PDDocument textToPdf(String text) throws IOException, COSVisitorException {
        PDDocument doc = new TextToPDF().createPDFFromText(new StringReader(text));
 
        return doc;
