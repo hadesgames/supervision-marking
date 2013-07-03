@@ -25,7 +25,7 @@
       <groupId>com.googlecode.htmleasy</groupId>
       <artifactId>htmleasy</artifactId>
       <version>0.7</version>
-   </dependency>
+    </dependency>
     <!-- resteasy ?! -->
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
@@ -40,12 +40,20 @@
       <version>2013-03-05</version>
     </dependency>
 
-     <!-- pdfBox -->
-      <dependency>
-          <groupId>org.apache.pdfbox</groupId>
-          <artifactId>pdfbox</artifactId>
-          <version>1.8.2</version>
-      </dependency>
+    <!-- pdfBox -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>1.8.2</version>
+    </dependency>
+
+    <!-- Hibernate -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>4.2.1.Final</version>
+    </dependency>
+
   </dependencies>
 
   <repositories>
