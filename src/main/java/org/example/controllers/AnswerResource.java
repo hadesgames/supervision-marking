@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import com.google.common.collect.ImmutableMap;
+import com.googlecode.htmleasy.RedirectException;
 import com.googlecode.htmleasy.ViewWith;
 import org.example.SessionFactoryManager;
 import org.example.models.FullAnswer;
@@ -31,13 +32,16 @@ public class AnswerResource {
         session.close();
         return ImmutableMap.of("answers", answers);
     }
-
+    /*
+    Uploading files has a separate controller
     @POST
     @Path("answers")
     public void addAnswer() {
-
         session.close();
+        throw new RedirectException("/answers/upload");
     }
+
+    */
 
     @GET
     @Produces("application/pdf")
