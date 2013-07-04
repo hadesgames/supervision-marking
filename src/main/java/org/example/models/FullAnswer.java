@@ -16,6 +16,10 @@ public class FullAnswer {
    private String filepath;
    private long id;
 
+   public FullAnswer(String fp) {
+       filepath = fp;
+   }
+
    @Id
    @GeneratedValue(generator="increment")
    @GenericGenerator(name="increment", strategy="increment")
