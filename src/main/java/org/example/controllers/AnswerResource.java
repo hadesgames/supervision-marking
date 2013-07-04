@@ -7,6 +7,8 @@ import org.example.models.FullAnswer;
 import org.hibernate.Session;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -38,10 +40,25 @@ public class AnswerResource {
     }
 
     @GET
+    @Produces("application/pdf")
     @Path("answers/{id}")
-    public void getAnswer() {
+    public Response getAnswer(@PathParam("id") int id) {
+        FullAnswer answer = (FullAnswer) session.get(FullAnswer.class, id);
+
+        if (answer == null)
+            throw new NotFoundException();
+
+        File file = new File(answer.getFilepath());
+
+        if (!file.exists())
+            throw new NotFoundException();
+
+        Response.ResponseBuilder response = Response.ok(file);
+        // TODO get rid of yummy
+        response.header("Content-Disposition", "filename=\"yummy.pdf\"");
 
         session.close();
+        return response.build();
     }
 
     @PUT
