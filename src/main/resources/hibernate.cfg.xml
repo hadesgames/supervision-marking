@@ -50,6 +50,7 @@
 
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
+        <property name="connection.autocommit">true</property>
 
         <mapping class="org.example.models.FullAnswer" />
         <mapping class="org.example.models.FragmentAnswer" />

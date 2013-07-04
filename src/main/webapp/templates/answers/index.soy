@@ -1,0 +1,33 @@
+{namespace answers}
+
+/** List all the answers
+* @param answers List of the answers to be displayed
+*/
+{template .index}
+    {call shared.layout.main}
+        {param body}
+
+            <table class="table">
+                <thead>
+                    <th> Id </th>
+                    <th> Link </th>
+                </thead>
+            {foreach $answer in $answers}
+                <tr>
+                    <td> {$answer.id} </td>
+                    <td> <a href="/answers/{$answer.id}"> bla.pdf </a> </td>
+                </tr>
+            {/foreach}
+
+            </table>
+
+            <form class="file-upload" method="post" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="file"/>
+                <input type="submit" class="btn btn-primary" name="submit" value="Upload"/>
+            </form>
+        {/param}
+     {/call}
+
+{/template}
+
+

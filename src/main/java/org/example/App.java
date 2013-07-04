@@ -13,6 +13,7 @@ public class App extends Application {
         // Add my own JAX-RS annotated classes
         myServices.add(org.example.controllers.Home.class);
         myServices.add(org.example.controllers.UploadController.class);
+        myServices.add(org.example.controllers.AnswerResource.class);
 
         // Add Htmleasy Providers
         myServices.addAll(HtmleasyProviders.getClasses());
