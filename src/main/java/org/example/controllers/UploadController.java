@@ -59,8 +59,7 @@ public class UploadController {
     }
 
     private static void cleanUp(String filename) {
-
-
+        (new File(filename)).delete();
     }
 
     @Path("")
