@@ -73,7 +73,16 @@ public class AnswerResource {
 
     @DELETE
     @Path("answers/{id}")
-    public void deleteAnswer() {
+    public void deleteAnswer(@PathParam("id") int id) {
+        FullAnswer answer = (FullAnswer) session.get(FullAnswer.class, id);
+
+        answer.delete();
+
+
+        session.beginTransaction();
+        session.delete(answer);
+        session.getTransaction().commit();
+
         session.close();
 
     }

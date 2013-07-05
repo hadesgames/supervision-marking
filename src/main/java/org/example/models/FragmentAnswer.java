@@ -6,8 +6,10 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "FragmentAnswer")
 public class FragmentAnswer {
     private String filepath;
     private long id;

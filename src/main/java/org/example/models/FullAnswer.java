@@ -4,16 +4,15 @@ package org.example.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.io.File;
 
 /**
  * Created by hadesgames on 7/3/13.
  */
 
 @Entity
+@Table(name = "FullAnswer")
 public class FullAnswer {
    private String filepath;
    private int id;
@@ -34,5 +33,13 @@ public class FullAnswer {
 
    public void setId(int i) { id = i; }
    public void setFilepath(String path) { filepath = path; }
+
+
+   public void delete() {
+       File f = new File(getFilepath());
+       f.delete();
+
+       //TODO delete fragments
+   }
 
 }
