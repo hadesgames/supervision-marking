@@ -83,6 +83,9 @@ public class UploadController {
 
             session.save(answer);
             session.getTransaction().commit();
+
+            answer.generateFragments(session);
+
             session.close();
 
         } catch (IOException e) {

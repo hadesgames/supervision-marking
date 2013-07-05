@@ -1,6 +1,7 @@
 package org.example.models;
 
 
+import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.annotation.Generated;
@@ -33,6 +34,12 @@ public class FullAnswer {
 
    public void setId(int i) { id = i; }
    public void setFilepath(String path) { filepath = path; }
+
+   public void generateFragments(Session session) {
+       session.beginTransaction();
+
+       session.getTransaction().commit();
+   }
 
 
    public void delete() {

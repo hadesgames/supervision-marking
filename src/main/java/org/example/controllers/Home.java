@@ -40,7 +40,7 @@ public class Home{
 
 
 
-
+    /* Done
     @Path("download/{many:.*}")
     @GET
     @Produces("application/pdf")
@@ -63,7 +63,7 @@ public class Home{
         ResponseBuilder response = Response.ok((Object) file);
         response.header("1", "2");
         return response.build();
-    }
+    }      */
 
     @Path("getPage/{id}")
     @GET
