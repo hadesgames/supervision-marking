@@ -8,6 +8,7 @@ import org.apache.pdfbox.util.Splitter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
 public class PdfManip {
 
     public static void main(String[] args) throws IOException {
-
+        /*
         String pathName = "/home/ap760/cur/supervision-marking/temp/bla.pdf";  // args[0]
 
         PDDocument document = PDDocument.load(pathName);
@@ -34,6 +35,7 @@ public class PdfManip {
         mergeList(listPDF);
 
         getPage(document, 2);
+        */
     }
 
     public static PDPage getPage(PDDocument document, int pageId)
@@ -65,9 +67,24 @@ public class PdfManip {
         }
     }
 
-    public static void saveList(List allPages)
+    public static List<String> splitPdf(String pdfPath, int answerId) {
+        try {
+            PDDocument document = PDDocument.load(pdfPath);
+
+            List listPDF = document.getDocumentCatalog().getAllPages();
+
+            return saveList(listPDF, answerId);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        return new LinkedList<String>();
+    }
+
+    public static List<String> saveList(List allPages, int id)
     {
 
+        List<String> res = new LinkedList<String>();
         try {
             PDDocument newDoc = null;
 
@@ -76,15 +93,21 @@ public class PdfManip {
             for ( int curPageCnt = 0; curPageCnt < allPages.size(); curPageCnt++ )
             {
                 newDoc = new PDDocument();
+                String path = "temp/fragments/fragment_" + id + "_" + curPageCnt + ".pdf";
 
                 newDoc.addPage((PDPage) allPages.get(curPageCnt));
-                newDoc.save("temp/Saved Page #" + curPageCnt + ".pdf");
+                newDoc.save(path);
                 newDoc.close();
+
+                res.add(path);
             }
+
         }
         catch ( Exception e ) {
             e.printStackTrace();
         }
+
+        return res;
     }
 
     public static void mergeList(List allPages) {

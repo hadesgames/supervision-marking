@@ -6,6 +6,7 @@ import com.googlecode.htmleasy.ViewWith;
 import org.example.SessionFactoryManager;
 import org.example.models.FullAnswer;
 import org.hibernate.Session;
+import org.hibernate.criterion.CriteriaSpecification;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -25,10 +26,14 @@ public class AnswerResource {
 
     @GET
     @Path("answers")
-    @ViewWith("/soy/answers.index")
+    @ViewWith("/jsp/answers.jsp")
     public Map<String, ?> getAnswers() {
-        List<FullAnswer> answers = session.createCriteria(FullAnswer.class)
+        List<FullAnswer> answers = session.createCriteria(FullAnswer.class).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
                                        .list();
+
+        System.out.println(answers.size());
+        for (FullAnswer answer: answers)
+            System.out.println("muie" + answer.getId());
         session.close();
         return ImmutableMap.of("answers", answers);
     }
@@ -76,7 +81,7 @@ public class AnswerResource {
     public void deleteAnswer(@PathParam("id") int id) {
         FullAnswer answer = (FullAnswer) session.get(FullAnswer.class, id);
 
-        answer.delete();
+        answer.delete(session);
 
 
         session.beginTransaction();
@@ -84,7 +89,6 @@ public class AnswerResource {
         session.getTransaction().commit();
 
         session.close();
-
     }
 
 }
