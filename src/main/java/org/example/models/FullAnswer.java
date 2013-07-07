@@ -67,9 +67,6 @@ public class FullAnswer {
        File f = new File(getFilepath());
 
        f.delete();
-       System.out.println("Am inceput sa sterg");
-       System.out.println(getFragments().size());
-       //Session session = SessionFactoryManager.getInstance().openSession();
        session.beginTransaction();
 
        for (FragmentAnswer fragment: getFragments()) {
@@ -79,8 +76,6 @@ public class FullAnswer {
        }
 
        session.getTransaction().commit();
-       //session.close();
-       System.out.println("AM terminat de sters ?!");
    }
 
 }

@@ -27,7 +27,7 @@ import java.util.Map;
 
 @Path("/answers/upload")
 public class UploadController {
-
+    // TODO hard coded paths
     private String getFileName(String initialFilename) {
         String filename = FilenameUtils.getName(initialFilename);
 

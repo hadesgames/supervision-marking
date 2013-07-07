@@ -12,14 +12,6 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-    $('.getPage input[type="submit"]').click(function() {
-       var val = $('.getPage input[type="text"]').val();
-
-       window.location.href="/getPage/" + val;
-    })
-})
-
-$(document).ready(function() {
    $('a.delete').click(function(evt) {
      evt.preventDefault();
      evt.stopPropagation();

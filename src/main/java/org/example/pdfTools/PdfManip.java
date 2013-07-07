@@ -129,10 +129,6 @@ public class PdfManip {
     public static PDDocument mergeList(List allPages) throws IOException {
         PDDocument newDoc = new PDDocument();
 
-
-
-        // Copying pages to new PDF
-
         for (Object page : allPages)
             newDoc.addPage((PDPage) page);
 

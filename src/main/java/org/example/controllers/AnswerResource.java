@@ -42,16 +42,7 @@ public class AnswerResource {
         session.close();
         return ImmutableMap.of("answers", answers);
     }
-    /*
-    Uploading files has a separate controller
-    @POST
-    @Path("answers")
-    public void addAnswer() {
-        session.close();
-        throw new RedirectException("/answers/upload");
-    }
 
-    */
     private Response pdfResponse(String path, String name) {
         File file = new File(path);
 
@@ -115,6 +106,7 @@ public class AnswerResource {
        }
 
         try {
+            // TODO hard coded path
             PDDocument document = PdfManip.merge(docs);
             document.save("temp/temp.pdf");
             document.close();
