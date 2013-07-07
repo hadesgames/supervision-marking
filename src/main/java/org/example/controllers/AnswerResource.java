@@ -3,14 +3,22 @@ package org.example.controllers;
 import com.google.common.collect.ImmutableMap;
 import com.googlecode.htmleasy.RedirectException;
 import com.googlecode.htmleasy.ViewWith;
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.example.SessionFactoryManager;
+import org.example.models.FragmentAnswer;
 import org.example.models.FullAnswer;
+import org.example.pdfTools.PdfManip;
+import org.h2.expression.Expression;
 import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Restrictions;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +39,6 @@ public class AnswerResource {
         List<FullAnswer> answers = session.createCriteria(FullAnswer.class).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
                                        .list();
 
-        System.out.println(answers.size());
-        for (FullAnswer answer: answers)
-            System.out.println("muie" + answer.getId());
         session.close();
         return ImmutableMap.of("answers", answers);
     }
@@ -47,6 +52,18 @@ public class AnswerResource {
     }
 
     */
+    private Response pdfResponse(String path, String name) {
+        File file = new File(path);
+
+        if (!file.exists())
+            throw new NotFoundException();
+
+        Response.ResponseBuilder response = Response.ok(file);
+
+        response.header("Content-Disposition", "filename=\"" + name + "\"");
+        return response.build();
+
+    }
 
     @GET
     @Produces("application/pdf")
@@ -57,17 +74,9 @@ public class AnswerResource {
         if (answer == null)
             throw new NotFoundException();
 
-        File file = new File(answer.getFilepath());
-
-        if (!file.exists())
-            throw new NotFoundException();
-
-        Response.ResponseBuilder response = Response.ok(file);
-        // TODO get rid of yummy
-        response.header("Content-Disposition", "filename=\"yummy.pdf\"");
 
         session.close();
-        return response.build();
+        return pdfResponse(answer.getFilepath(), answer.getName() + ".pdf");
     }
 
     @PUT
@@ -89,6 +98,41 @@ public class AnswerResource {
         session.getTransaction().commit();
 
         session.close();
+    }
+
+    @Path("fragments")
+    @POST
+    @Produces("application/pdf")
+    public Response getPage(@FormParam("page") int page) {
+       List<FragmentAnswer> pages = session.createCriteria(FragmentAnswer.class)
+                                           .setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+                                           .add(Restrictions.eq("page", page))
+                                           .list();
+
+       List<String> docs = new LinkedList<String>();
+       for (FragmentAnswer fragment: pages) {
+           docs.add(fragment.getFilepath());
+       }
+
+        try {
+            PDDocument document = PdfManip.merge(docs);
+            document.save("temp/temp.pdf");
+            document.close();
+            Response resp =  pdfResponse("temp/temp.pdf", "pages.pdf");
+            return resp;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (COSVisitorException e) {
+            e.printStackTrace();
+        } catch (NotFoundException e) {
+            (new File("temp/temp.pdf")).delete();
+            throw e;
+        } finally {
+            session.close();
+        }
+        throw new NotFoundException();
+
     }
 
 }

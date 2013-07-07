@@ -1,12 +1,12 @@
 package org.example.models;
 
 
+import org.apache.commons.io.FilenameUtils;
 import org.example.SessionFactoryManager;
 import org.example.pdfTools.PdfManip;
 import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.io.File;
 import java.util.List;
@@ -18,12 +18,14 @@ import java.util.Set;
 public class FullAnswer {
    private String filepath;
    private int id;
+   private String name;
    private Set<FragmentAnswer> fragments;
 
    public FullAnswer() {}
 
    public FullAnswer(String fp) {
        filepath = fp;
+       name = FilenameUtils.getBaseName(FilenameUtils.getBaseName(filepath));
    }
 
    @Id
@@ -34,12 +36,13 @@ public class FullAnswer {
    @OneToMany(fetch=FetchType.EAGER, mappedBy = "parentAnswer")
    public Set<FragmentAnswer> getFragments() { return fragments; }
 
-
+   public String getName() { return name; }
    public String getFilepath() { return filepath; }
 
    public void setId(int i) { id = i; }
    public void setFilepath(String path) { filepath = path; }
    public void setFragments(Set<FragmentAnswer> frags) { fragments = frags; }
+   public void setName(String n) { name = n; }
 
    public void generateFragments() {
        Session session = SessionFactoryManager.getInstance().openSession();

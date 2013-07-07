@@ -28,16 +28,6 @@ import java.util.Map;
 @Path("/answers/upload")
 public class UploadController {
 
-
-    @Path("")
-    @GET
-    @ViewWith("/soy/home.upload")
-    public Map<String, Object> showUploadForm() {
-        return ImmutableMap.of();
-    }
-
-
-
     private String getFileName(String initialFilename) {
         String filename = FilenameUtils.getName(initialFilename);
 
@@ -96,7 +86,7 @@ public class UploadController {
             return ;
         }
 
-        throw new RedirectException("/upload");
+        throw new RedirectException("/answers");
     }
 
     private void convertToPDF(String filename, String output) throws IOException, COSVisitorException {

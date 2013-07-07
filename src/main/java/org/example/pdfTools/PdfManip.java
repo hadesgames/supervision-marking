@@ -110,23 +110,32 @@ public class PdfManip {
         return res;
     }
 
-    public static void mergeList(List allPages) {
+    public static PDDocument merge(List<String> docs) throws IOException {
+        List<PDPage> pages = new LinkedList<PDPage>();
 
         try {
-            PDDocument newDoc = null;
-
-            newDoc = new PDDocument();
-
-            // Copying pages to new PDF
-
-            for (Object page : allPages)
-                newDoc.addPage((PDPage) page);
-
-            newDoc.save("temp/Saved Merge.pdf");
-            newDoc.close();
-        }
-        catch ( Exception e ) {
+            for (String doc: docs) {
+                PDDocument document =  PDDocument.load(doc);
+                pages.addAll(document.getDocumentCatalog().getAllPages());
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return mergeList(pages);
+
+    }
+
+    public static PDDocument mergeList(List allPages) throws IOException {
+        PDDocument newDoc = new PDDocument();
+
+
+
+        // Copying pages to new PDF
+
+        for (Object page : allPages)
+            newDoc.addPage((PDPage) page);
+
+        return newDoc;
     }
 }
