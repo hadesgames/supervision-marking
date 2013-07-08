@@ -35,13 +35,17 @@ public class AnswerResource {
 
     @GET
     @Path("answers")
-    @ViewWith("/jsp/answers.jsp")
+    @ViewWith("/soy/answers.index")
     public Map<String, ?> getAnswers() {
         List<FullAnswer> answers = session.createCriteria(FullAnswer.class).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
                                        .list();
 
+        List hash_answers = new LinkedList();
+        for (FullAnswer answer: answers)
+            hash_answers.add(ImmutableMap.of("id", answer.getId(), "name", answer.getName()));
+
         session.close();
-        return ImmutableMap.of("answers", answers);
+        return ImmutableMap.of("answers", hash_answers);
     }
 
     private Response pdfResponse(String path, String name) {

@@ -15,7 +15,7 @@
             {foreach $answer in $answers}
                 <tr>
                     <td> {$answer.id} </td>
-                    <td> <a href="/answers/{$answer.id}"> bla.pdf </a> </td>
+                    <td> <a href="/answers/{$answer.id}"> {$answer.name} </a> </td>
                     <td> <a class="delete btn btn-danger" href="/answers/{$answer.id}"> <i class="fui-cross"></i></a></td>
                 </tr>
             {/foreach}
@@ -23,8 +23,20 @@
             </table>
 
             <form class="file-upload" method="post" action="/answers/upload" enctype="multipart/form-data">
-                <input type="file" name="file"/>
-                <input type="submit" class="btn btn-primary" name="submit" value="Upload"/>
+                <fieldset>
+                    <legend> Upload a new answer </legend>
+                    <input type="file" name="file"/>
+                    <input type="submit" class="btn btn-primary" name="submit" value="Upload"/>
+                </fieldset>
+            </form>
+
+
+            <form class="getFragments" action="/fragments/" method="post">
+                <fieldset>
+                    <legend> Get a page  </legend>
+                    <input type="text" name="page"/>
+                    <input type="submit" class="btn btn-info"/>
+                </fieldset>
             </form>
         {/param}
      {/call}
