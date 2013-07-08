@@ -6,6 +6,7 @@ import com.googlecode.htmleasy.ViewWith;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.example.SessionFactoryManager;
+import org.example.helpers.PathHelper;
 import org.example.models.FragmentAnswer;
 import org.example.models.FullAnswer;
 import org.example.pdfTools.PdfManip;
@@ -44,12 +45,14 @@ public class AnswerResource {
     }
 
     private Response pdfResponse(String path, String name) {
-        File file = new File(path);
+        return pdfResponse(new File(path), name);
+    }
+    private Response pdfResponse(File pdf, String name) {
 
-        if (!file.exists())
+        if (!pdf.exists())
             throw new NotFoundException();
 
-        Response.ResponseBuilder response = Response.ok(file);
+        Response.ResponseBuilder response = Response.ok(pdf);
 
         response.header("Content-Disposition", "filename=\"" + name + "\"");
         return response.build();
@@ -106,20 +109,17 @@ public class AnswerResource {
        }
 
         try {
-            // TODO hard coded path
+            File tempFile = PathHelper.getTempFile("page_query", ".pdf");
             PDDocument document = PdfManip.merge(docs);
-            document.save("temp/temp.pdf");
+            document.save(tempFile);
             document.close();
-            Response resp =  pdfResponse("temp/temp.pdf", "pages.pdf");
+            Response resp =  pdfResponse(tempFile, "pages.pdf");
             return resp;
 
         } catch (IOException e) {
             e.printStackTrace();
         } catch (COSVisitorException e) {
             e.printStackTrace();
-        } catch (NotFoundException e) {
-            (new File("temp/temp.pdf")).delete();
-            throw e;
         } finally {
             session.close();
         }
