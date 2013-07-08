@@ -9,9 +9,11 @@ import java.io.IOException;
 public class PathHelper {
     final static String TEMP_DIR = "temp";
     final static String PDF_DIR = "temp/answers";
+    final static String FRAGMENT_DIR = "temp/fragments";
 
-    final static File temp = new File(TEMP_DIR);
-    final static File pdf = new File(PDF_DIR);
+    public final static File temp = new File(TEMP_DIR);
+    public final static File pdf = new File(PDF_DIR);
+    public final static File fragments = new File("temp/fragments");
 
     public static String getFilename(String filepath) {
         return FilenameUtils.getBaseName(filepath);
